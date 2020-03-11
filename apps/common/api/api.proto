@@ -1,0 +1,32 @@
+// 定义项目 API 的 proto 文件 可以同时描述 gRPC 和 HTTP API
+// protobuf 文件参考:
+//  - https://developers.google.com/protocol-buffers/
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+// package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
+package common.service.v1;
+
+// NOTE: 最后请删除这些无用的注释 (゜-゜)つロ
+
+option go_package = "api";
+option (gogoproto.goproto_getters_all) = false;
+
+service CommonService {
+  rpc GetUser(CommonReq) returns (CommonRes) {
+    option (google.api.http) = {
+        get:"/common_service/getuser"
+    };
+};
+}
+
+message CommonReq {
+  int32 id = 1;
+}
+
+message CommonRes {
+  string data = 1;
+}
